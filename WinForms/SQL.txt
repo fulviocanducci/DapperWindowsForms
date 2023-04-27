@@ -1,0 +1,23 @@
+﻿USE [EfTest]
+GO
+
+/****** Object:  Table [dbo].[Peoples]    Script Date: 26/04/2023 23:24:04 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Peoples](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Active] [bit] NOT NULL,
+ CONSTRAINT [PK_Peoples] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Peoples] ADD  CONSTRAINT [DF_Peoples_Active]  DEFAULT ((1)) FOR [Active]
+GO
