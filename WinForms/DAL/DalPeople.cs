@@ -2,7 +2,6 @@
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 using WinForms.Models;
-
 namespace WinForms.DAL
 {
    public class DalPeople
