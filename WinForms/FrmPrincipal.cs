@@ -1,6 +1,5 @@
 using Microsoft.Data.SqlClient;
 using WinForms.DAL;
-
 namespace WinForms
 {
    public partial class FrmPrincipal : Form
