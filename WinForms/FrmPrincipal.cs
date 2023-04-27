@@ -15,7 +15,7 @@ namespace WinForms
          DalPeople = new(SqlConnection);
       }
 
-      private void LoadDataGridViewPeople(string name = "")
+      private void LoadDataGridViewPeople(string name)
       {
          DataGridViewPeople.AutoGenerateColumns = false;
          DataGridViewPeople.DataSource = DalPeople.GetList(name);
@@ -30,6 +30,15 @@ namespace WinForms
          LoadDataGridViewPeople(TxtFilter.Text);
       }
 
+      private void DataGridViewPeopleLoadFrmPeople(object sender, DataGridViewCellEventArgs e)
+      {
+         object itemId = ((DataGridView)(sender)).Rows[e.RowIndex].Cells[0].Value;
+         if (int.TryParse(itemId.ToString(), out int id))
+         {
+            LoadFrmPeople(id);
+         }
+      }
+
       private void FrmPrincipal_Load(object sender, EventArgs e)
       {
          LoadDataGridViewPeople(TxtFilter.Text);
@@ -42,11 +51,7 @@ namespace WinForms
 
       private void DataGridViewPeople_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
       {
-         object itemId = DataGridViewPeople.Rows[e.RowIndex].Cells[0].Value;
-         if (int.TryParse(itemId.ToString(), out int id))
-         {
-            LoadFrmPeople(id);
-         }
+         DataGridViewPeopleLoadFrmPeople(sender, e);
       }
 
       private void ButNew_Click(object sender, EventArgs e)
@@ -58,7 +63,7 @@ namespace WinForms
       {
          if (DataGridViewPeople.Rows.Count > 0 && DataGridViewPeople.CurrentRow.Index >= 0)
          {
-            DataGridViewPeople_CellDoubleClick(DataGridViewPeople, new DataGridViewCellEventArgs(0, DataGridViewPeople.CurrentRow.Index));
+            DataGridViewPeopleLoadFrmPeople(DataGridViewPeople, new DataGridViewCellEventArgs(0, DataGridViewPeople.CurrentRow.Index));
          }
       }
 

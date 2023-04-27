@@ -4,7 +4,7 @@ using Microsoft.Data.SqlClient;
 using WinForms.Models;
 namespace WinForms.DAL
 {
-   public class DalPeople
+   public class DalPeople : IDalPeople
    {
       private readonly SqlConnection _sqlConnection;
 
@@ -15,7 +15,7 @@ namespace WinForms.DAL
 
       public IEnumerable<People> GetAll()
       {
-         return _sqlConnection.Query<People>("SELECT * FROM Peoples ORDER BY Name ASC");
+         return _sqlConnection.GetAll<People>();
       }
 
       public IList<People> GetList()
@@ -23,24 +23,29 @@ namespace WinForms.DAL
          return GetAll().ToList();
       }
 
-      public IList<People> GetList(string name)
+      public IList<People> GetList(string filter)
       {
-         return _sqlConnection.Query<People>("SELECT * FROM Peoples WHERE Name Like @Name ORDER BY Name ASC", new {Name = $"%{name}%"}).ToList();
+         return _sqlConnection.Query<People>("SELECT * FROM Peoples WHERE Name Like @Name ORDER BY Name ASC", new { Name = $"%{filter}%" }).ToList();
       }
 
-      public People? Get(int id)
+      public People? Find(int id)
       {
-         return _sqlConnection.QueryFirst<People>("SELECT * FROM Peoples WHERE Id=@Id", new { Id = id });
+         return _sqlConnection.Get<People>(id);
       }
 
-      public long Insert(People people)
+      public long Insert(People model)
       {
-         return _sqlConnection.Insert(people);
+         return _sqlConnection.Insert(model);
       }
 
-      public bool Update(People people)
+      public bool Update(People model)
       {
-         return _sqlConnection.Update(people);
+         return _sqlConnection.Update(model);
+      }
+
+      public bool Delete(People model)
+      {
+         return _sqlConnection.Delete(model);
       }
    }
 }

@@ -30,7 +30,7 @@ namespace WinForms
          }
          else // update register
          {
-            People? people = DalPeople.Get(Id.Value);
+            People? people = DalPeople.Find(Id.Value);
             if (people != null)
             {
                TxtId.Text = people.Id.ToString("000");
